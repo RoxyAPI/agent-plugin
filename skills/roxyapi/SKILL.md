@@ -63,7 +63,7 @@ Audit before you write the call:
 
 ## Rule 0: Location first, charts second
 
-Every chart, horoscope, panchang, dasha, dosha, navamsa, KP, synastry, compatibility, and natal endpoint requires `latitude`, `longitude`, and `timezone`. Always call Location first. Never ask the user for coordinates.
+Every chart, horoscope, panchang, dasha, dosha, navamsa, KP, synastry, compatibility, and natal endpoint requires `latitude`, `longitude`, and `timezone`. Call Location first. Never ask the user for coordinates.
 
 ```
 1. GET https://roxyapi.com/api/v2/location/search?q=New York
@@ -75,6 +75,8 @@ Every chart, horoscope, panchang, dasha, dosha, navamsa, KP, synastry, compatibi
 `q` accepts bare city (`Tokyo`), city + country (`Berlin Germany`), or comma-qualified (`Springfield, Illinois`). Use the qualified form to disambiguate same-named cities. Case-insensitive, partial matching.
 
 `timezone` accepts decimal (`-5`, `5.5`) OR IANA string (`"America/New_York"`). IANA is preferred; it resolves to the DST-correct offset for the request's `date`.
+
+**Already geocoding?** If the app already resolves places with its own geocoder, keep it and send its values: latitude and longitude in decimal degrees, and timezone as the IANA name of that place (America/New_York, Europe/London, Asia/Kolkata) rather than a fixed offset, so daylight saving resolves for the birth date. Location stays the default because one call returns all three for 235,000+ places, ranked across alternate and historic spellings.
 
 ## Authentication
 
