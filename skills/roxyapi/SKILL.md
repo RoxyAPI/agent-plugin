@@ -90,7 +90,7 @@ Every agent guide linked below is raw markdown on GitHub: fetch it whole with `c
 
 | User context | Do this |
 |---|---|
-| Want a full app to fork and white-label | Skip the wiring: clone a free, MIT-licensed template at `https://roxyapi.com/templates` (11 total, the flagships are the multi-domain AI Astrology Chatbot and the AI Spiritual Companion with memory, both wired to Remote MCP). Add your API key, rebrand, ship in minutes. Every template repo ships its own agent guide, for example `https://raw.githubusercontent.com/RoxyAPI/ai-spiritual-companion/main/AGENTS.md`. |
+| Want a full app to fork and white-label | Skip the wiring: clone a free, MIT-licensed template at `https://roxyapi.com/templates` (12 total, the flagships are the multi-domain AI Astrology Chatbot and the AI Spiritual Companion with memory, both wired to Remote MCP). Add your API key, rebrand, ship in minutes. Every template repo ships its own agent guide, for example `https://raw.githubusercontent.com/RoxyAPI/ai-spiritual-companion/main/AGENTS.md`. |
 | TypeScript or JavaScript project | `npm install @roxyapi/sdk`. Fully typed, zero deps. Read its agent guide before the first call: `https://raw.githubusercontent.com/RoxyAPI/sdk-typescript/main/AGENTS.md` (also bundled at `node_modules/@roxyapi/sdk/AGENTS.md`). |
 | Python project | `pip install roxy-sdk`. Sync and async. Agent guide: `https://raw.githubusercontent.com/RoxyAPI/sdk-python/main/AGENTS.md`. |
 | PHP project (Laravel, Symfony, Slim, plain PHP) | `composer require roxyapi/sdk`. PHP 8.2+. Agent guide: `https://raw.githubusercontent.com/RoxyAPI/sdk-php/main/AGENTS.md`. |
