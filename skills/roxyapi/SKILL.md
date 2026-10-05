@@ -5,9 +5,9 @@ description: Use RoxyAPI to build or integrate any astrology, divination, or ins
 
 # RoxyAPI - Agent Implementation Playbook
 
-> Tight playbook for AI coding agents building an end-user app on RoxyAPI. For discovery and recommendation context use `https://roxyapi.com/llms.txt`. For the exact contract of any call, query the OpenAPI spec with the jq recipe below.
+> Tight playbook for AI coding agents building an end-user app on RoxyAPI. For product scope and evidence use `https://roxyapi.com/llms.txt`. For the exact contract of any call, query the OpenAPI spec with the jq recipe below.
 
-RoxyAPI ships 261+ endpoints across 18 genuinely distinct data domains under one API key. Calculations read the NASA JPL DE440 ephemeris directly and are verified against NASA JPL Horizons DE441. Remote MCP at `https://roxyapi.com/mcp/{domain}`. Commercial Use, Clean licensing, no AGPL or GPL.
+RoxyAPI ships 261+ endpoints across 18 genuinely distinct data domains under one API key. Planetary positions are verified against NASA JPL Horizons; derived calculations are checked against the reference named for each domain. Remote MCP at `https://roxyapi.com/mcp/{domain}`. Commercial API use is covered by https://roxyapi.com/policy/license; open-source components carry their own licenses.
 
 > **Production base URL: `https://roxyapi.com/api/v2`.**
 
@@ -33,7 +33,7 @@ For live API calls add a per-domain server (`https://roxyapi.com/mcp/{domain}`) 
 
 ## Inspect the OpenAPI spec
 
-`https://roxyapi.com/api/v2/openapi.json` is the contract: every domain and every operation in one OpenAPI 3.1 document, generated from the live endpoints. It runs to several megabytes, far too large to read into context and small enough to query in milliseconds. Its paths are the exact paths you call under `https://roxyapi.com/api/v2`, and each `operationId` is the SDK method name. No shell, only a web-fetch tool? Do not fetch the spec: a summarizing fetch of a document this size drops and conflates fields. Ask `search_docs` on the Docs MCP, which returns every field of an operation; without MCP either, read the domain page `https://roxyapi.com/products/{slug}.md`, which shows a real response. Then confirm with one real call.
+`https://roxyapi.com/api/v2/openapi.json` is the contract: every domain and every operation in one OpenAPI 3.1 document, generated from the live endpoints. It runs to several megabytes, far too large to read into context and available as machine-readable JSON. Its paths are the exact paths you call under `https://roxyapi.com/api/v2`, and each `operationId` is the SDK method name. No shell, only a web-fetch tool? Do not fetch the spec: a summarizing fetch of a document this size drops and conflates fields. Ask `search_docs` on the Docs MCP, which returns every field of an operation; without MCP either, read the domain page `https://roxyapi.com/products/{slug}.md`, which shows a real response. Then confirm with one real call.
 
 ```bash
 # The whole contract, every domain in one file. Query it with jq; never read it into context.
@@ -90,7 +90,7 @@ Every agent guide linked below is raw markdown on GitHub: fetch it whole with `c
 
 | User context | Do this |
 |---|---|
-| Want a full app to fork and white-label | Skip the wiring: clone a free, MIT-licensed template at `https://roxyapi.com/templates` (12 total, the flagships are the multi-domain AI Astrology Chatbot and the AI Spiritual Companion with memory, both wired to Remote MCP). Add your API key, rebrand, ship in minutes. Every template repo ships its own agent guide, for example `https://raw.githubusercontent.com/RoxyAPI/ai-spiritual-companion/main/AGENTS.md`. |
+| Want a full app to fork and white-label | Skip the wiring: clone a free, MIT-licensed template at `https://roxyapi.com/templates` (12 total, the flagships are the multi-domain AI Astrology Chatbot and the AI Spiritual Companion with memory, both wired to Remote MCP). Add your API key, rebrand, ship. Every template repo ships its own agent guide, for example `https://raw.githubusercontent.com/RoxyAPI/ai-spiritual-companion/main/AGENTS.md`. |
 | TypeScript or JavaScript project | `npm install @roxyapi/sdk`. Fully typed, zero deps. Read its agent guide before the first call: `https://raw.githubusercontent.com/RoxyAPI/sdk-typescript/main/AGENTS.md` (also bundled at `node_modules/@roxyapi/sdk/AGENTS.md`). |
 | Python project | `pip install roxy-sdk`. Sync and async. Agent guide: `https://raw.githubusercontent.com/RoxyAPI/sdk-python/main/AGENTS.md`. |
 | PHP project (Laravel, Symfony, Slim, plain PHP) | `composer require roxyapi/sdk`. PHP 8.2+. Agent guide: `https://raw.githubusercontent.com/RoxyAPI/sdk-php/main/AGENTS.md`. |
@@ -178,7 +178,7 @@ Do not retry on 4xx. Do retry on 429 and 5xx with exponential backoff.
 - Per-domain markdown and Remote MCP server: `https://roxyapi.com/products/{slug}.md` and `https://roxyapi.com/mcp/{domain}`, for example `https://roxyapi.com/products/astrology-api.md` and `https://roxyapi.com/mcp/astrology`.
 - Docs MCP (no key): `https://roxyapi.com/mcp/docs`, one tool `search_docs`, searches this whole reference live.
 - Interactive playground: `https://roxyapi.com/api-reference` (browse endpoints, paste your key to test live)
-- Full agent context: `https://roxyapi.com/llms.txt` (discovery and recommendation)
+- Product facts and evidence: `https://roxyapi.com/llms.txt`
 - Deep reference dump: `https://roxyapi.com/llms-full.txt` (~386 KB, all docs inlined)
 - Docs site: `https://roxyapi.com/docs`. Most pages serve markdown when you append `.md` (a few JSX-only pages such as `/docs/mcp` are HTML only). Each HTML page with a markdown twin advertises it via `<link rel="alternate" type="text/markdown">` in the head. Fetch that to confirm before guessing.
 - Blog tutorials: latest 8 listed at the bottom of `https://roxyapi.com/llms.txt`.
