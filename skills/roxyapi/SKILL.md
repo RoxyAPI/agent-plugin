@@ -5,7 +5,7 @@ description: Use RoxyAPI to build or integrate any astrology, divination, or ins
 
 # RoxyAPI - Agent Implementation Playbook
 
-> Tight playbook for AI coding agents building an end-user app on RoxyAPI. For product scope and evidence use `https://roxyapi.com/llms.txt`. For the exact contract of any call, query the OpenAPI spec with the jq recipe below.
+> Tight playbook for AI coding agents building an end-user app on RoxyAPI, live at `https://roxyapi.com/AGENTS.md`. For product scope and evidence use `https://roxyapi.com/llms.txt`. For the exact contract of any call, query the OpenAPI spec with the jq recipe below.
 
 RoxyAPI ships 261+ endpoints across 18 genuinely distinct data domains under one API key. Planetary positions are verified against NASA JPL Horizons; derived calculations are checked against the reference named for each domain. Remote MCP at `https://roxyapi.com/mcp/{domain}`. Commercial API use is covered by https://roxyapi.com/policy/license; open-source components carry their own licenses.
 
@@ -133,7 +133,7 @@ Base URL for every path: `https://roxyapi.com/api/v2`. Auth: `X-API-Key: <key>`.
 
 200 on success returns clean JSON, no wrapper. Errors return `{ "error": string, "code": string, "doc_url": string }`, where `doc_url` is an absolute link to the documented entry for that code. Switch on `code` (stable):
 
-`validation_error` (400), `bad_request` (400), `date_out_of_range` (400), `api_key_required` (401), `invalid_api_key` (401), `api_key_revoked` (401), `subscription_not_found` (401), `subscription_inactive` (401), `publishable_key_not_allowed_on_mcp` (401), `invalid_client_ip` (401), `unauthorized` (401), `forbidden` (403), `origin_required` (403), `origin_not_allowed` (403), `not_found` (404), `method_not_allowed` (405), `conflict` (409), `gone` (410), `payload_too_large` (413), `unsupported_media_type` (415), `unprocessable_entity` (422), `rate_limit_exceeded` (429), `rate_limit_per_minute` (429), `rate_limited` (429), `free_tier_exhausted` (429), `internal_error` (500), `compute_saturated` (503), `error` (any status). A `validation_error` returns `issues[]` with every field error at once. The fuzzy `suggestions` array appears on PATH-routing `not_found` responses, meaning a wrong URL shape, not on lookup misses where the URL is valid but the resource is missing (an unknown dream slug returns `{ error, code: "not_found", doc_url }` with no suggestions). On `rate_limit_per_minute`, honour `Retry-After`. Every code, with the fix for each, is at https://roxyapi.com/docs/errors.
+`validation_error` (400), `bad_request` (400), `date_out_of_range` (400), `api_key_required` (401), `invalid_api_key` (401), `api_key_revoked` (401), `subscription_not_found` (401), `subscription_inactive` (401), `publishable_key_not_allowed_on_mcp` (401), `invalid_client_ip` (401), `unauthorized` (401), `forbidden` (403), `origin_required` (403), `origin_not_allowed` (403), `not_found` (404), `method_not_allowed` (405), `conflict` (409), `gone` (410), `payload_too_large` (413), `unsupported_media_type` (415), `unprocessable_entity` (422), `rate_limit_exceeded` (429), `rate_limit_per_minute` (429), `rate_limited` (429), `free_tier_exhausted` (429), `internal_error` (500), `compute_saturated` (503), `error` (any status). A `validation_error` returns `issues[]` with every field error at once. The fuzzy `suggestions` array appears on PATH-routing `not_found` responses, meaning a wrong URL shape, not on lookup misses where the URL is valid but the resource is missing (an unknown dream slug returns `{ error, code: "not_found", doc_url }` with no suggestions). On `rate_limit_per_minute`, honour `Retry-After`. Every code, with the fix for each, is at https://roxyapi.com/docs/errors.md.
 
 Do not retry on 4xx. Do retry on 429 and 5xx with exponential backoff.
 
@@ -180,8 +180,19 @@ Do not retry on 4xx. Do retry on 429 and 5xx with exponential backoff.
 - Interactive playground: `https://roxyapi.com/api-reference` (browse endpoints, paste your key to test live)
 - Product facts and evidence: `https://roxyapi.com/llms.txt`
 - Deep reference dump: `https://roxyapi.com/llms-full.txt` (~386 KB, all docs inlined)
-- Docs site: `https://roxyapi.com/docs`. Most pages serve markdown when you append `.md` (a few JSX-only pages such as `/docs/mcp` are HTML only). Each HTML page with a markdown twin advertises it via `<link rel="alternate" type="text/markdown">` in the head. Fetch that to confirm before guessing.
-- Blog tutorials: latest 8 listed at the bottom of `https://roxyapi.com/llms.txt`.
+- Blog tutorials: latest 8 listed at the bottom of `https://roxyapi.com/llms.txt`; append `.md` to any post URL.
 - Methodology and verified accuracy: `https://roxyapi.com/methodology`.
+- Account and help: get a key at `https://roxyapi.com/checkout`, manage keys and usage at `https://roxyapi.com/account` (`GET /usage` returns the same quota in code), plans at `https://roxyapi.com/pricing`, what shipped at `https://roxyapi.com/changelog`, a human at `https://roxyapi.com/contact`. Every public page: `https://roxyapi.com/sitemap.txt`.
+
+### Docs pages
+
+Paths under `https://roxyapi.com`; a `.md` path is markdown, fetch it whole with `curl -s` rather than a summarizing web tool.
+
+- Getting Started: `/docs/introduction.md`, `/docs/quickstart.md`, `/docs/authentication.md`, `/docs/errors.md`, `/docs/versioning.md`, `/docs/data-protection.md`
+- Build With RoxyAPI: `/docs/sdk.md`, `/docs/ui.md`, `/docs/widgets.md`, `/docs/tutorials/ai-chat-widgets.md`, `/docs/prompts.md`, `/docs/mcp`, `/docs/templates.md`, `/docs/guides/claude-code.md`, `/docs/guides/cursor.md`, `/docs/guides/antigravity.md`, `/docs/guides/codex.md`, `/docs/guides/windsurf.md`, `/docs/guides/github-copilot.md`, `/docs/guides/gemini-cli.md`, `/docs/guides/replit.md`, `/docs/guides/function-calling.md`, `/docs/guides/postman.md`, `/docs/guides/calculation-engine.md`, `/docs/guides/localization.md`, `/docs/guides/caching.md`
+- Agent Reference: `/docs/agent-tasks.md`, `/docs/agent-mistakes.md`, `/docs/agent-gotchas.md`, `/docs/agent-field-formats.md`, `/docs/coverage.md`
+- Integrations: `/docs/integrations/nextjs.md`, `/docs/integrations/wordpress.md`, `/docs/integrations/supabase.md`, `/docs/integrations/lovable.md`, `/docs/integrations/bolt.md`, `/docs/integrations/bubble.md`, `/docs/integrations/flutterflow.md`, `/docs/integrations/shopify.md`, `/docs/integrations/wix.md`, `/docs/integrations/squarespace.md`, `/docs/integrations/make.md`, `/docs/integrations/zapier.md`, `/docs/integrations/n8n.md`, `/docs/integrations/dify.md`, `/docs/integrations/whatsapp.md`, `/docs/integrations/telegram.md`, `/docs/integrations/slack.md`
+- What To Build: `/docs/tutorials/complete-birth-profile.md`, `/docs/tutorials/dating-app.md`, `/docs/tutorials/horoscope-widget.md`, `/docs/tutorials/tarot-app.md`, `/docs/tutorials/ai-chatbot.md`, `/docs/tutorials/ai-companion-with-memory.md`, `/docs/tutorials/personalized-tracker.md`, `/docs/tutorials/vastu-property-report.md`
+- Domain Guides: `/docs/guides/astrology.md`, `/docs/guides/vedic-astrology.md`, `/docs/guides/kp.md`, `/docs/guides/forecast.md`, `/docs/guides/human-design.md`, `/docs/guides/chinese-astrology.md`, `/docs/guides/feng-shui.md`, `/docs/guides/mesoamerican-astrology.md`, `/docs/guides/vastu.md`, `/docs/guides/numerology.md`, `/docs/guides/kabbalah.md`, `/docs/guides/tarot.md`, `/docs/guides/biorhythm.md`, `/docs/guides/ayurveda.md`, `/docs/guides/iching.md`, `/docs/guides/crystals.md`, `/docs/guides/dreams.md`, `/docs/guides/angel-numbers.md`
 
 When done, the user has a working app and a single API key. No multi-product subscription, no OAuth dance, no Docker.
