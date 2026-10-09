@@ -1,8 +1,8 @@
 {
-	"name": "roxyapi-claude-plugin",
+	"name": "roxyapi-agent-plugin",
 	"private": true,
 	"type": "module",
-	"description": "RoxyAPI Claude Code plugin and marketplace, auto generated from the live OpenAPI spec.",
+	"description": "RoxyAPI agent plugin for Claude Code, Cursor and Agent Plugins clients, auto generated from the live OpenAPI spec.",
 	"scripts": {
 		"sync": "bun run scripts/sync.ts",
 		"check": "biome check . --fix",

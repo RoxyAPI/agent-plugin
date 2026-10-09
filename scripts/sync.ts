@@ -2,7 +2,7 @@
  * Regenerates the plugin artifacts from the public RoxyAPI OpenAPI spec and agent playbook.
  *
  * @remarks
- * Sources, both fetched fresh each run, nothing vendored: the combined spec at /api/v2/openapi.json (the same single spec the SDKs generate from) for the domain keyword list, and the playbook at /AGENTS.md for the Skill body. Outputs seven files: skills/roxyapi/SKILL.md; the open Agent Plugins package (plugin.json, mcp.json) that Cursor, Codex, VS Code and other compatible clients load; .claude-plugin/{plugin,marketplace}.json with .mcp.json for Claude Code; and .cursor-plugin/plugin.json for the Cursor logo. New domains appear in the keywords automatically.
+ * Sources, both fetched fresh each run, nothing vendored: the combined spec at /api/v2/openapi.json (the same single spec the SDKs generate from) for the domain keyword list, and the playbook at /AGENTS.md for the Skill body. Outputs seven files: skills/roxyapi/SKILL.md; the open Agent Plugins package (plugin.json, mcp.json) that Cursor, Codex, VS Code and other compatible clients load; .claude-plugin/{plugin,marketplace}.json with .mcp.json for Claude Code; and .cursor-plugin/plugin.json for the Cursor display fields. New domains appear in the keywords automatically.
  *
  * Run `bun run sync` to write the artifacts, or `bun run sync --dry-run` to build and validate without writing (CI and the pre-push hook use this). The sync workflow commits the result only when it differs.
  */
@@ -26,6 +26,7 @@ const AGENT_MCP_PATH = join(ROOT, 'mcp.json');
 /** Agent Plugins (agent-plugins.org) schema version the root manifest and mcp.json target. */
 const AGENT_PLUGINS_SCHEMAS = 'https://agent-plugins.org/schemas/1.1.0';
 
+const REPOSITORY = 'https://github.com/RoxyAPI/agent-plugin';
 const DOCS_MCP_NAME = 'roxy-docs';
 
 /** Directory listing copy, shared by every client that is not Claude Code. Counts are floors so the text stays true as the API grows. */
@@ -131,7 +132,7 @@ function manifest(slugs: string[], hostKeyword: string, description: string) {
 		description,
 		author: { name: 'RoxyAPI' },
 		homepage: 'https://roxyapi.com',
-		repository: 'https://github.com/RoxyAPI/claude-plugin',
+		repository: REPOSITORY,
 		license: 'MIT',
 		keywords: keywords(slugs, hostKeyword),
 	};
@@ -153,10 +154,12 @@ function buildAgentPlugin(slugs: string[]) {
 	};
 }
 
-/** Cursor manifest, kept only for the marketplace logo; skills/ and mcp.json load by Cursor folder discovery. */
+/** Cursor manifest, kept for the marketplace display fields; skills/ and mcp.json load by Cursor folder discovery. */
 function buildCursorPlugin(slugs: string[]) {
 	return {
 		...manifest(slugs, 'cursor', LISTING_DESCRIPTION),
+		displayName: 'RoxyAPI',
+		category: 'integrations',
 		logo: 'assets/logo.png',
 	};
 }
@@ -176,7 +179,7 @@ function buildMarketplace(slugs: string[]) {
 				category: 'api',
 				keywords: keywords(slugs, 'claude-code'),
 				homepage: 'https://roxyapi.com',
-				repository: 'https://github.com/RoxyAPI/claude-plugin',
+				repository: REPOSITORY,
 				license: 'MIT',
 			},
 		],

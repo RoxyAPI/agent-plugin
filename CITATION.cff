@@ -1,15 +1,17 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
-title: "RoxyAPI for Claude Code"
-abstract: "A Claude Code plugin and marketplace for RoxyAPI, the multi domain spiritual intelligence API. Ships a skill plus the keyless Docs MCP, auto generated and kept in sync from the live OpenAPI spec."
+title: "RoxyAPI agent plugin for Claude Code and Cursor"
+abstract: "A Claude Code plugin and marketplace, Cursor plugin and Agent Plugins package for RoxyAPI, the multi domain spiritual intelligence API. Ships a skill plus the keyless Docs MCP, auto generated and kept in sync from the live OpenAPI spec."
 authors:
   - name: "RoxyAPI"
-url: "https://github.com/RoxyAPI/claude-plugin"
-repository-code: "https://github.com/RoxyAPI/claude-plugin"
+url: "https://github.com/RoxyAPI/agent-plugin"
+repository-code: "https://github.com/RoxyAPI/agent-plugin"
 license: MIT
 type: software
 keywords:
   - claude-code
+  - cursor
+  - agent-plugin
   - mcp
   - remote-mcp
   - agent-skill

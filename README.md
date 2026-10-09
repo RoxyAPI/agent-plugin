@@ -1,12 +1,12 @@
 <p align="center">
   <a href="https://roxyapi.com">
-    <img src="https://raw.githubusercontent.com/RoxyAPI/claude-plugin/main/assets/hero.png" alt="RoxyAPI Claude Code plugin, one install, every domain. The Spiritual OS layer for agentic AI. One key, flat pricing." width="100%">
+    <img src="https://raw.githubusercontent.com/RoxyAPI/agent-plugin/main/assets/hero.png" alt="RoxyAPI for Claude Code and Cursor, one install, every domain. The Spiritual OS layer for agentic AI. One key, flat pricing." width="100%">
   </a>
 </p>
 
-# RoxyAPI for Claude Code and Cursor
+# RoxyAPI agent plugin for Claude Code and Cursor
 
-[![CI](https://github.com/RoxyAPI/claude-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/RoxyAPI/claude-plugin/actions/workflows/ci.yml)
+[![CI](https://github.com/RoxyAPI/agent-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/RoxyAPI/agent-plugin/actions/workflows/ci.yml)
 [![MCP docs](https://img.shields.io/badge/MCP-roxyapi.com-blue)](https://roxyapi.com/docs/mcp)
 [![API Reference](https://img.shields.io/badge/api%20reference-roxyapi.com-blue)](https://roxyapi.com/api-reference)
 [![Docs](https://img.shields.io/badge/docs-roxyapi.com-blue)](https://roxyapi.com/docs)
@@ -25,7 +25,7 @@ Both stay current automatically. The plugin is regenerated from the live OpenAPI
 ## Install in Claude Code
 
 ```
-/plugin marketplace add RoxyAPI/claude-plugin
+/plugin marketplace add RoxyAPI/agent-plugin
 /plugin install roxyapi@roxyapi
 ```
 
@@ -34,7 +34,7 @@ Both stay current automatically. The plugin is regenerated from the live OpenAPI
 Clone the plugin into the local plugins folder, then reload Cursor:
 
 ```
-git clone https://github.com/RoxyAPI/claude-plugin ~/.cursor/plugins/local/roxyapi
+git clone https://github.com/RoxyAPI/agent-plugin ~/.cursor/plugins/local/roxyapi
 ```
 
 Cursor loads the same Skill and connects the same keyless Docs MCP.

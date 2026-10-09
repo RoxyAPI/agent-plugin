@@ -42,7 +42,7 @@
 				"location"
 			],
 			"homepage": "https://roxyapi.com",
-			"repository": "https://github.com/RoxyAPI/claude-plugin",
+			"repository": "https://github.com/RoxyAPI/agent-plugin",
 			"license": "MIT"
 		}
 	]

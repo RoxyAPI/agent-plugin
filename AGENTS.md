@@ -1,4 +1,4 @@
-# RoxyAPI Claude Code and Cursor plugin - Agent Guide
+# RoxyAPI agent plugin for Claude Code and Cursor - Agent Guide
 
 This repo is a Claude Code plugin, a self hosted Claude Code marketplace, and an Agent Plugins package (loaded by Cursor and other compatible clients) for RoxyAPI, the multi domain spiritual intelligence API. Installing it gives the editor a skill plus the keyless Docs MCP for RoxyAPI.
 
@@ -7,14 +7,14 @@ This repo is a Claude Code plugin, a self hosted Claude Code marketplace, and an
 Claude Code:
 
 ```
-/plugin marketplace add RoxyAPI/claude-plugin
+/plugin marketplace add RoxyAPI/agent-plugin
 /plugin install roxyapi@roxyapi
 ```
 
 Cursor:
 
 ```
-git clone https://github.com/RoxyAPI/claude-plugin ~/.cursor/plugins/local/roxyapi
+git clone https://github.com/RoxyAPI/agent-plugin ~/.cursor/plugins/local/roxyapi
 ```
 
 ## What ships
