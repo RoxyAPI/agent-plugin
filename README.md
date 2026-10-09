@@ -37,7 +37,11 @@ Clone the plugin into the local plugins folder, then reload Cursor:
 git clone https://github.com/RoxyAPI/claude-plugin ~/.cursor/plugins/local/roxyapi
 ```
 
-Cursor reads `.cursor-plugin/plugin.json`, loads the same Skill, and connects the same keyless Docs MCP.
+Cursor loads the same Skill and connects the same keyless Docs MCP.
+
+## Any Agent Plugins client
+
+The repository root is a standard [Agent Plugins](https://agent-plugins.org) package: `plugin.json`, `skills/`, and `mcp.json`. Any client that loads that open format gets the same Skill and Docs MCP from this repository URL.
 
 That is the whole setup. The agent now reaches for RoxyAPI when you build any astrology, tarot, numerology, human design, forecast, or other insight feature, and can query the Docs MCP for exact endpoints while it writes the integration.
 

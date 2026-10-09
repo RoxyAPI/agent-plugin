@@ -2,7 +2,7 @@
  * Regenerates the plugin artifacts from the public RoxyAPI OpenAPI spec and agent playbook.
  *
  * @remarks
- * Sources, both fetched fresh each run, nothing vendored: the combined spec at /api/v2/openapi.json (the same single spec the SDKs generate from) for the domain keyword list, and the playbook at /AGENTS.md for the Skill body. Outputs five files: skills/roxyapi/SKILL.md, .mcp.json, .claude-plugin/{plugin,marketplace}.json, and .cursor-plugin/plugin.json. New domains appear in the keywords automatically.
+ * Sources, both fetched fresh each run, nothing vendored: the combined spec at /api/v2/openapi.json (the same single spec the SDKs generate from) for the domain keyword list, and the playbook at /AGENTS.md for the Skill body. Outputs seven files: skills/roxyapi/SKILL.md; the open Agent Plugins package (plugin.json, mcp.json) that Cursor, Codex, VS Code and other compatible clients load; .claude-plugin/{plugin,marketplace}.json with .mcp.json for Claude Code; and .cursor-plugin/plugin.json for the Cursor logo. New domains appear in the keywords automatically.
  *
  * Run `bun run sync` to write the artifacts, or `bun run sync --dry-run` to build and validate without writing (CI and the pre-push hook use this). The sync workflow commits the result only when it differs.
  */
@@ -20,6 +20,17 @@ const MCP_PATH = join(ROOT, '.mcp.json');
 const PLUGIN_PATH = join(ROOT, '.claude-plugin', 'plugin.json');
 const MARKETPLACE_PATH = join(ROOT, '.claude-plugin', 'marketplace.json');
 const CURSOR_PLUGIN_PATH = join(ROOT, '.cursor-plugin', 'plugin.json');
+const AGENT_PLUGIN_PATH = join(ROOT, 'plugin.json');
+const AGENT_MCP_PATH = join(ROOT, 'mcp.json');
+
+/** Agent Plugins (agent-plugins.org) schema version the root manifest and mcp.json target. */
+const AGENT_PLUGINS_SCHEMAS = 'https://agent-plugins.org/schemas/1.1.0';
+
+const DOCS_MCP_NAME = 'roxy-docs';
+
+/** Directory listing copy, shared by every client that is not Claude Code. Counts are floors so the text stays true as the API grows. */
+const LISTING_DESCRIPTION =
+	'The Spiritual OS layer for agentic AI: Western and Vedic astrology, human design, numerology, tarot and 18+ insight domains on one API key. Installs a skill plus the keyless Docs MCP, so your coding agent writes RoxyAPI integrations against real endpoints and fields. 250+ hosted Remote MCP tools, no local setup. Verified against NASA JPL Horizons with 3,500+ gold-standard tests. Flat pricing, typed SDKs, MIT UI components and templates, 10+ languages, no AGPL.';
 
 /** Marketing keywords that are not domain slugs. Merged with the host keyword and the discovered slugs for plugin and marketplace discovery. */
 const FIXED_KEYWORDS = [
@@ -37,14 +48,6 @@ const FIXED_KEYWORDS = [
 
 /** App-utility path segments (not insight domains). Excluded from discovery keywords so an astrology plugin is not tagged "usage" or "languages". The only thing here that is not a product domain. */
 const UTILITY_SEGMENTS = new Set(['usage', 'languages']);
-
-/** The editors this repo ships a manifest for. Both load the same skills/ directory and the same keyless Docs MCP. */
-const HOSTS = {
-	claude: { name: 'Claude Code', keyword: 'claude-code', agent: 'Claude' },
-	cursor: { name: 'Cursor', keyword: 'cursor', agent: 'the Cursor agent' },
-} as const;
-
-type Host = (typeof HOSTS)[keyof typeof HOSTS];
 
 const DRY_RUN = new Set(process.argv.slice(2)).has('--dry-run');
 
@@ -99,39 +102,62 @@ function buildSkill(playbook: string): string {
 	return `---\nname: roxyapi\ndescription: ${description}\n---\n\n${playbook.trimStart()}`;
 }
 
+/** Claude Code MCP config (.mcp.json). */
 function buildMcpConfig() {
 	return {
+		mcpServers: { [DOCS_MCP_NAME]: { type: 'http', url: DOCS_MCP_URL } },
+	};
+}
+
+/** Agent Plugins MCP config (mcp.json), which names the transport explicitly. */
+function buildAgentMcpConfig() {
+	return {
+		$schema: `${AGENT_PLUGINS_SCHEMAS}/mcp.schema.json`,
 		mcpServers: {
-			'roxy-docs': {
-				type: 'http',
-				url: DOCS_MCP_URL,
-			},
+			[DOCS_MCP_NAME]: { type: 'streamable-http', url: DOCS_MCP_URL },
 		},
 	};
 }
 
-function keywords(slugs: string[], host: Host): string[] {
-	return [...new Set([host.keyword, ...FIXED_KEYWORDS, ...slugs])];
+/** `hostKeyword` leads so each client indexes its own name. */
+function keywords(slugs: string[], hostKeyword: string): string[] {
+	return [...new Set([hostKeyword, ...FIXED_KEYWORDS, ...slugs])];
 }
 
-function buildPlugin(slugs: string[], host: Host) {
+/** Manifest fields every format shares. */
+function manifest(slugs: string[], hostKeyword: string, description: string) {
 	return {
 		name: 'roxyapi',
-		description: `RoxyAPI multi domain spiritual intelligence API and Remote MCP for ${host.name}. Auto connects the keyless Docs MCP and ships a skill that teaches ${host.agent} how to build natal charts, Vedic kundli, forecasts, human design, Chinese astrology, feng shui, numerology, tarot, and more, all under one key.`,
+		description,
 		author: { name: 'RoxyAPI' },
 		homepage: 'https://roxyapi.com',
 		repository: 'https://github.com/RoxyAPI/claude-plugin',
 		license: 'MIT',
-		keywords: keywords(slugs, host),
+		keywords: keywords(slugs, hostKeyword),
 	};
 }
 
-/** Cursor manifest. Skills come from folder discovery of skills/. The Docs MCP is inline because Cursor discovers mcp.json, not .mcp.json, and infers the transport from `url`. */
+function buildPlugin(slugs: string[]) {
+	return manifest(
+		slugs,
+		'claude-code',
+		'RoxyAPI multi domain spiritual intelligence API and Remote MCP for Claude Code. Auto connects the keyless Docs MCP and ships a skill that teaches Claude how to build natal charts, Vedic kundli, forecasts, human design, Chinese astrology, feng shui, numerology, tarot, and more, all under one key.',
+	);
+}
+
+/** Root Agent Plugins manifest. Skills come from skills/, the Docs MCP from mcp.json, both at their fixed locations. */
+function buildAgentPlugin(slugs: string[]) {
+	return {
+		$schema: `${AGENT_PLUGINS_SCHEMAS}/plugin.schema.json`,
+		...manifest(slugs, 'agent-plugin', LISTING_DESCRIPTION),
+	};
+}
+
+/** Cursor manifest, kept only for the marketplace logo; skills/ and mcp.json load by Cursor folder discovery. */
 function buildCursorPlugin(slugs: string[]) {
 	return {
-		...buildPlugin(slugs, HOSTS.cursor),
+		...manifest(slugs, 'cursor', LISTING_DESCRIPTION),
 		logo: 'assets/logo.png',
-		mcpServers: { 'roxy-docs': { url: DOCS_MCP_URL } },
 	};
 }
 
@@ -148,7 +174,7 @@ function buildMarketplace(slugs: string[]) {
 				description:
 					'Connects Claude Code to RoxyAPI: a keyless Docs MCP for live endpoint lookup plus a skill that teaches Claude how to build on every RoxyAPI domain under one key.',
 				category: 'api',
-				keywords: keywords(slugs, HOSTS.claude),
+				keywords: keywords(slugs, 'claude-code'),
 				homepage: 'https://roxyapi.com',
 				repository: 'https://github.com/RoxyAPI/claude-plugin',
 				license: 'MIT',
@@ -178,13 +204,15 @@ async function main(): Promise<void> {
 
 	const skill = buildSkill(playbook);
 	const mcp = buildMcpConfig();
-	const plugin = buildPlugin(slugs, HOSTS.claude);
+	const plugin = buildPlugin(slugs);
 	const marketplace = buildMarketplace(slugs);
 	const cursorPlugin = buildCursorPlugin(slugs);
+	const agentPlugin = buildAgentPlugin(slugs);
+	const agentMcp = buildAgentMcpConfig();
 
 	if (DRY_RUN) {
 		console.log(
-			'built: SKILL.md, .mcp.json, plugin.json, marketplace.json, cursor plugin.json (validated, not written)',
+			'built: SKILL.md, plugin.json, mcp.json, .mcp.json, Claude and Cursor manifests (validated, not written)',
 		);
 		return;
 	}
@@ -195,10 +223,12 @@ async function main(): Promise<void> {
 		writeJson(PLUGIN_PATH, plugin),
 		writeJson(MARKETPLACE_PATH, marketplace),
 		writeJson(CURSOR_PLUGIN_PATH, cursorPlugin),
+		writeJson(AGENT_PLUGIN_PATH, agentPlugin),
+		writeJson(AGENT_MCP_PATH, agentMcp),
 	]);
 
 	console.log(
-		'wrote: skills/roxyapi/SKILL.md, .mcp.json, .claude-plugin/plugin.json, .claude-plugin/marketplace.json, .cursor-plugin/plugin.json',
+		'wrote: skills/roxyapi/SKILL.md, plugin.json, mcp.json, .mcp.json, .claude-plugin/plugin.json, .claude-plugin/marketplace.json, .cursor-plugin/plugin.json',
 	);
 }
 

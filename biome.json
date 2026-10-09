@@ -11,6 +11,8 @@
 			"!**/.claude-plugin",
 			"!**/.cursor-plugin",
 			"!.mcp.json",
+			"!mcp.json",
+			"!plugin.json",
 			"!**/skills"
 		]
 	},

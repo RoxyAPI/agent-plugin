@@ -1,0 +1,9 @@
+{
+	"$schema": "https://agent-plugins.org/schemas/1.1.0/mcp.schema.json",
+	"mcpServers": {
+		"roxy-docs": {
+			"type": "streamable-http",
+			"url": "https://roxyapi.com/mcp/docs"
+		}
+	}
+}

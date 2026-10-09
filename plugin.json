@@ -1,4 +1,5 @@
 {
+	"$schema": "https://agent-plugins.org/schemas/1.1.0/plugin.schema.json",
 	"name": "roxyapi",
 	"description": "The Spiritual OS layer for agentic AI: Western and Vedic astrology, human design, numerology, tarot and 18+ insight domains on one API key. Installs a skill plus the keyless Docs MCP, so your coding agent writes RoxyAPI integrations against real endpoints and fields. 250+ hosted Remote MCP tools, no local setup. Verified against NASA JPL Horizons with 3,500+ gold-standard tests. Flat pricing, typed SDKs, MIT UI components and templates, 10+ languages, no AGPL.",
 	"author": {
@@ -8,7 +9,7 @@
 	"repository": "https://github.com/RoxyAPI/claude-plugin",
 	"license": "MIT",
 	"keywords": [
-		"cursor",
+		"agent-plugin",
 		"roxyapi",
 		"mcp",
 		"remote-mcp",
@@ -37,6 +38,5 @@
 		"dreams",
 		"angel-numbers",
 		"location"
-	],
-	"logo": "assets/logo.png"
+	]
 }
