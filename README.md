@@ -47,7 +47,7 @@ That is the whole setup. The agent now reaches for RoxyAPI when you build any as
 
 ## Make live API calls
 
-The Docs MCP is keyless and answers questions about the API. To let Claude call the API for real (returning live charts, readings, or forecasts), add a per domain Remote MCP server with your key. Get a key at [roxyapi.com/account](https://roxyapi.com/account), then add to your MCP config:
+The Docs MCP is keyless and answers questions about the API. To let the agent call the API for real (returning live charts, readings, or forecasts), add a per domain Remote MCP server with your key. Get a key at [roxyapi.com/account](https://roxyapi.com/account), then add to your MCP config:
 
 ```json
 {
