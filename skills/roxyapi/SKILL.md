@@ -17,9 +17,9 @@ Run the line for the client you are running in yourself; do not ask the user to.
 
 | Client | Run |
 |---|---|
-| Claude Code | `claude plugin marketplace add RoxyAPI/claude-plugin` then `claude plugin install roxyapi@roxyapi`: the Docs MCP plus a skill for every RoxyAPI domain. Server only: `claude mcp add --transport http --scope user roxy-docs https://roxyapi.com/mcp/docs`. Check with `claude mcp list`. |
+| Claude Code | `claude plugin marketplace add RoxyAPI/agent-plugin` then `claude plugin install roxyapi@roxyapi`: the Docs MCP plus a skill for every RoxyAPI domain. Server only: `claude mcp add --transport http --scope user roxy-docs https://roxyapi.com/mcp/docs`. Check with `claude mcp list`. |
 | Codex | `codex mcp add roxy-docs --url https://roxyapi.com/mcp/docs`. Check with `codex mcp list`. |
-| Cursor | No add command. Put `"roxy-docs": { "url": "https://roxyapi.com/mcp/docs" }` under `mcpServers` in `~/.cursor/mcp.json`, or `.cursor/mcp.json` for this project only. |
+| Cursor | `git clone https://github.com/RoxyAPI/agent-plugin ~/.cursor/plugins/local/roxyapi` then `Developer: Reload Window`: the same plugin as Claude Code. Server only, no add command: put `"roxy-docs": { "url": "https://roxyapi.com/mcp/docs" }` under `mcpServers` in `~/.cursor/mcp.json`, or `.cursor/mcp.json` for this project only. |
 | VS Code, GitHub Copilot | `code --add-mcp '{"name":"roxy-docs","type":"http","url":"https://roxyapi.com/mcp/docs"}'` |
 | Windsurf (Devin Desktop) | `devin mcp add -s user roxy-docs https://roxyapi.com/mcp/docs`. For Cascade, put `"roxy-docs": { "serverUrl": "https://roxyapi.com/mcp/docs" }` under `mcpServers` in `~/.codeium/windsurf/mcp_config.json`. |
 | Gemini CLI | `gemini mcp add --transport http --scope user roxy-docs https://roxyapi.com/mcp/docs`. Check with `gemini mcp list`. |
