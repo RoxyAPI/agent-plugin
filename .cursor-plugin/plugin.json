@@ -1,6 +1,6 @@
 {
 	"name": "roxyapi",
-	"description": "RoxyAPI multi domain spiritual intelligence API and Remote MCP for Claude Code. Auto connects the keyless Docs MCP and ships a skill that teaches Claude how to build natal charts, Vedic kundli, forecasts, human design, Chinese astrology, feng shui, numerology, tarot, and more, all under one key.",
+	"description": "RoxyAPI multi domain spiritual intelligence API and Remote MCP for Cursor. Auto connects the keyless Docs MCP and ships a skill that teaches the Cursor agent how to build natal charts, Vedic kundli, forecasts, human design, Chinese astrology, feng shui, numerology, tarot, and more, all under one key.",
 	"author": {
 		"name": "RoxyAPI"
 	},
@@ -8,7 +8,7 @@
 	"repository": "https://github.com/RoxyAPI/claude-plugin",
 	"license": "MIT",
 	"keywords": [
-		"claude-code",
+		"cursor",
 		"roxyapi",
 		"mcp",
 		"remote-mcp",
@@ -37,5 +37,11 @@
 		"dreams",
 		"angel-numbers",
 		"location"
-	]
+	],
+	"logo": "assets/logo.png",
+	"mcpServers": {
+		"roxy-docs": {
+			"url": "https://roxyapi.com/mcp/docs"
+		}
+	}
 }

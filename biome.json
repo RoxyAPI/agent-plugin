@@ -6,7 +6,13 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["**", "!**/.claude-plugin", "!.mcp.json", "!**/skills"]
+		"includes": [
+			"**",
+			"!**/.claude-plugin",
+			"!**/.cursor-plugin",
+			"!.mcp.json",
+			"!**/skills"
+		]
 	},
 	"formatter": {
 		"enabled": true,

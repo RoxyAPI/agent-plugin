@@ -11,10 +11,10 @@
 			"description": "Connects Claude Code to RoxyAPI: a keyless Docs MCP for live endpoint lookup plus a skill that teaches Claude how to build on every RoxyAPI domain under one key.",
 			"category": "api",
 			"keywords": [
+				"claude-code",
 				"roxyapi",
 				"mcp",
 				"remote-mcp",
-				"claude-code",
 				"agent-skill",
 				"astrology-api",
 				"spiritual",

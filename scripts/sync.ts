@@ -2,7 +2,7 @@
  * Regenerates the plugin artifacts from the public RoxyAPI OpenAPI spec and agent playbook.
  *
  * @remarks
- * Sources, both fetched fresh each run, nothing vendored: the combined spec at /api/v2/openapi.json (the same single spec the SDKs generate from) for the domain keyword list, and the playbook at /AGENTS.md for the Skill body. Outputs four files: skills/roxyapi/SKILL.md, .mcp.json, and .claude-plugin/{plugin,marketplace}.json. New domains appear in the keywords automatically.
+ * Sources, both fetched fresh each run, nothing vendored: the combined spec at /api/v2/openapi.json (the same single spec the SDKs generate from) for the domain keyword list, and the playbook at /AGENTS.md for the Skill body. Outputs five files: skills/roxyapi/SKILL.md, .mcp.json, .claude-plugin/{plugin,marketplace}.json, and .cursor-plugin/plugin.json. New domains appear in the keywords automatically.
  *
  * Run `bun run sync` to write the artifacts, or `bun run sync --dry-run` to build and validate without writing (CI and the pre-push hook use this). The sync workflow commits the result only when it differs.
  */
@@ -19,13 +19,13 @@ const SKILL_PATH = join(ROOT, 'skills', 'roxyapi', 'SKILL.md');
 const MCP_PATH = join(ROOT, '.mcp.json');
 const PLUGIN_PATH = join(ROOT, '.claude-plugin', 'plugin.json');
 const MARKETPLACE_PATH = join(ROOT, '.claude-plugin', 'marketplace.json');
+const CURSOR_PLUGIN_PATH = join(ROOT, '.cursor-plugin', 'plugin.json');
 
-/** Marketing keywords that are not domain slugs. Merged with the discovered slugs for plugin and marketplace discovery. */
+/** Marketing keywords that are not domain slugs. Merged with the host keyword and the discovered slugs for plugin and marketplace discovery. */
 const FIXED_KEYWORDS = [
 	'roxyapi',
 	'mcp',
 	'remote-mcp',
-	'claude-code',
 	'agent-skill',
 	'astrology-api',
 	'spiritual',
@@ -37,6 +37,14 @@ const FIXED_KEYWORDS = [
 
 /** App-utility path segments (not insight domains). Excluded from discovery keywords so an astrology plugin is not tagged "usage" or "languages". The only thing here that is not a product domain. */
 const UTILITY_SEGMENTS = new Set(['usage', 'languages']);
+
+/** The editors this repo ships a manifest for. Both load the same skills/ directory and the same keyless Docs MCP. */
+const HOSTS = {
+	claude: { name: 'Claude Code', keyword: 'claude-code', agent: 'Claude' },
+	cursor: { name: 'Cursor', keyword: 'cursor', agent: 'the Cursor agent' },
+} as const;
+
+type Host = (typeof HOSTS)[keyof typeof HOSTS];
 
 const DRY_RUN = new Set(process.argv.slice(2)).has('--dry-run');
 
@@ -102,20 +110,28 @@ function buildMcpConfig() {
 	};
 }
 
-function keywords(slugs: string[]): string[] {
-	return [...new Set([...FIXED_KEYWORDS, ...slugs])];
+function keywords(slugs: string[], host: Host): string[] {
+	return [...new Set([host.keyword, ...FIXED_KEYWORDS, ...slugs])];
 }
 
-function buildPlugin(slugs: string[]) {
+function buildPlugin(slugs: string[], host: Host) {
 	return {
 		name: 'roxyapi',
-		description:
-			'RoxyAPI multi domain spiritual intelligence API and Remote MCP for Claude Code. Auto connects the keyless Docs MCP and ships a skill that teaches Claude how to build natal charts, Vedic kundli, forecasts, human design, Chinese astrology, feng shui, numerology, tarot, and more, all under one key.',
+		description: `RoxyAPI multi domain spiritual intelligence API and Remote MCP for ${host.name}. Auto connects the keyless Docs MCP and ships a skill that teaches ${host.agent} how to build natal charts, Vedic kundli, forecasts, human design, Chinese astrology, feng shui, numerology, tarot, and more, all under one key.`,
 		author: { name: 'RoxyAPI' },
 		homepage: 'https://roxyapi.com',
 		repository: 'https://github.com/RoxyAPI/claude-plugin',
 		license: 'MIT',
-		keywords: keywords(slugs),
+		keywords: keywords(slugs, host),
+	};
+}
+
+/** Cursor manifest. Skills come from folder discovery of skills/. The Docs MCP is inline because Cursor discovers mcp.json, not .mcp.json, and infers the transport from `url`. */
+function buildCursorPlugin(slugs: string[]) {
+	return {
+		...buildPlugin(slugs, HOSTS.cursor),
+		logo: 'assets/logo.png',
+		mcpServers: { 'roxy-docs': { url: DOCS_MCP_URL } },
 	};
 }
 
@@ -132,7 +148,7 @@ function buildMarketplace(slugs: string[]) {
 				description:
 					'Connects Claude Code to RoxyAPI: a keyless Docs MCP for live endpoint lookup plus a skill that teaches Claude how to build on every RoxyAPI domain under one key.',
 				category: 'api',
-				keywords: keywords(slugs),
+				keywords: keywords(slugs, HOSTS.claude),
 				homepage: 'https://roxyapi.com',
 				repository: 'https://github.com/RoxyAPI/claude-plugin',
 				license: 'MIT',
@@ -162,12 +178,13 @@ async function main(): Promise<void> {
 
 	const skill = buildSkill(playbook);
 	const mcp = buildMcpConfig();
-	const plugin = buildPlugin(slugs);
+	const plugin = buildPlugin(slugs, HOSTS.claude);
 	const marketplace = buildMarketplace(slugs);
+	const cursorPlugin = buildCursorPlugin(slugs);
 
 	if (DRY_RUN) {
 		console.log(
-			'built: SKILL.md, .mcp.json, plugin.json, marketplace.json (validated, not written)',
+			'built: SKILL.md, .mcp.json, plugin.json, marketplace.json, cursor plugin.json (validated, not written)',
 		);
 		return;
 	}
@@ -177,10 +194,11 @@ async function main(): Promise<void> {
 		writeJson(MCP_PATH, mcp),
 		writeJson(PLUGIN_PATH, plugin),
 		writeJson(MARKETPLACE_PATH, marketplace),
+		writeJson(CURSOR_PLUGIN_PATH, cursorPlugin),
 	]);
 
 	console.log(
-		'wrote: skills/roxyapi/SKILL.md, .mcp.json, .claude-plugin/plugin.json, .claude-plugin/marketplace.json',
+		'wrote: skills/roxyapi/SKILL.md, .mcp.json, .claude-plugin/plugin.json, .claude-plugin/marketplace.json, .cursor-plugin/plugin.json',
 	);
 }
 

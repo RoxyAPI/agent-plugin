@@ -1,23 +1,32 @@
-# RoxyAPI Claude Code plugin - Agent Guide
+# RoxyAPI Claude Code and Cursor plugin - Agent Guide
 
-This repo is a Claude Code plugin and self hosted marketplace for RoxyAPI, the multi domain spiritual intelligence API. Installing it gives Claude Code a skill plus the keyless Docs MCP for RoxyAPI.
+This repo is a Claude Code plugin, a self hosted Claude Code marketplace, and a Cursor plugin for RoxyAPI, the multi domain spiritual intelligence API. Installing it gives the editor a skill plus the keyless Docs MCP for RoxyAPI.
 
 ## Install
+
+Claude Code:
 
 ```
 /plugin marketplace add RoxyAPI/claude-plugin
 /plugin install roxyapi@roxyapi
 ```
 
+Cursor:
+
+```
+git clone https://github.com/RoxyAPI/claude-plugin ~/.cursor/plugins/local/roxyapi
+```
+
 ## What ships
 
-- `skills/roxyapi/SKILL.md`: model invoked skill. Teaches Claude when and how to call RoxyAPI (location first rule, `X-API-Key` auth, per domain endpoints, error contract, SDK and Remote MCP paths). Body is the live agent playbook from `https://roxyapi.com/AGENTS.md`.
+- `skills/roxyapi/SKILL.md`: model invoked skill. Teaches the agent when and how to call RoxyAPI (location first rule, `X-API-Key` auth, per domain endpoints, error contract, SDK and Remote MCP paths). Body is the live agent playbook from `https://roxyapi.com/AGENTS.md`.
 - `.mcp.json`: auto connects the keyless Docs MCP at `https://roxyapi.com/mcp/docs` (one tool, `search_docs`). No key needed.
-- `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`: plugin and marketplace manifests.
+- `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`: Claude Code plugin and marketplace manifests.
+- `.cursor-plugin/plugin.json`: Cursor plugin manifest. Same skill, Docs MCP declared inline, logo at `assets/logo.png`.
 
 ## Generated, not hand written
 
-Every artifact is regenerated from the live OpenAPI spec and `/AGENTS.md` by `scripts/sync.ts`. The spec at `https://roxyapi.com` is the single source of truth. Do not hand edit `skills/`, `.mcp.json`, or `.claude-plugin/`. To change the plugin, change the API.
+Every artifact is regenerated from the live OpenAPI spec and `/AGENTS.md` by `scripts/sync.ts`. The spec at `https://roxyapi.com` is the single source of truth. Do not hand edit `skills/`, `.mcp.json`, `.claude-plugin/`, or `.cursor-plugin/`. To change the plugin, change the API.
 
 ## Live API calls
 

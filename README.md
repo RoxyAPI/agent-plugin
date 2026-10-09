@@ -4,7 +4,7 @@
   </a>
 </p>
 
-# RoxyAPI for Claude Code
+# RoxyAPI for Claude Code and Cursor
 
 [![CI](https://github.com/RoxyAPI/claude-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/RoxyAPI/claude-plugin/actions/workflows/ci.yml)
 [![MCP docs](https://img.shields.io/badge/MCP-roxyapi.com-blue)](https://roxyapi.com/docs/mcp)
@@ -13,25 +13,33 @@
 [![Pricing](https://img.shields.io/badge/pricing-roxyapi.com-blue)](https://roxyapi.com/pricing)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
-A Claude Code plugin that teaches Claude how to build on RoxyAPI, the multi domain spiritual intelligence API: Western and Vedic astrology, horoscopes, forecast, human design, Chinese astrology, feng shui, Mesoamerican astrology, Vastu, numerology, Kabbalah, tarot, biorhythm, Ayurveda, I Ching, crystals, dreams, angel numbers, and location. One key, every domain. Remote MCP, typed SDKs, and drop in UI components live alongside at [roxyapi.com](https://roxyapi.com).
+A Claude Code and Cursor plugin that teaches your coding agent how to build on RoxyAPI, the multi domain spiritual intelligence API: Western and Vedic astrology, horoscopes, forecast, human design, Chinese astrology, feng shui, Mesoamerican astrology, Vastu, numerology, Kabbalah, tarot, biorhythm, Ayurveda, I Ching, crystals, dreams, angel numbers, and location. One key, every domain. Remote MCP, typed SDKs, and drop in UI components live alongside at [roxyapi.com](https://roxyapi.com).
 
-One install gives Claude Code two things, no API key required:
+One install gives the agent two things, no API key required:
 
-- A **Skill** that tells Claude when and how to call RoxyAPI: the location first rule, `X-API-Key` auth, endpoints per domain, the error contract, and the SDK and Remote MCP integration paths.
-- The keyless **Docs MCP** (`search_docs`), auto connected, so Claude looks up the exact endpoint, field, or SDK method live from the reference instead of guessing.
+- A **Skill** that tells the agent when and how to call RoxyAPI: the location first rule, `X-API-Key` auth, endpoints per domain, the error contract, and the SDK and Remote MCP integration paths.
+- The keyless **Docs MCP** (`search_docs`), auto connected, so the agent looks up the exact endpoint, field, or SDK method live from the reference instead of guessing.
 
 Both stay current automatically. The plugin is regenerated from the live OpenAPI spec and the published agent playbook, so as the API grows the Skill grows with it.
 
-## Install
-
-In Claude Code:
+## Install in Claude Code
 
 ```
 /plugin marketplace add RoxyAPI/claude-plugin
 /plugin install roxyapi@roxyapi
 ```
 
-That is the whole setup. Claude now reaches for RoxyAPI when you build any astrology, tarot, numerology, human design, forecast, or other insight feature, and can query the Docs MCP for exact endpoints while it writes the integration.
+## Install in Cursor
+
+Clone the plugin into the local plugins folder, then reload Cursor:
+
+```
+git clone https://github.com/RoxyAPI/claude-plugin ~/.cursor/plugins/local/roxyapi
+```
+
+Cursor reads `.cursor-plugin/plugin.json`, loads the same Skill, and connects the same keyless Docs MCP.
+
+That is the whole setup. The agent now reaches for RoxyAPI when you build any astrology, tarot, numerology, human design, forecast, or other insight feature, and can query the Docs MCP for exact endpoints while it writes the integration.
 
 ## Make live API calls
 
@@ -57,7 +65,7 @@ Every domain is its own Streamable HTTP server at `https://roxyapi.com/mcp/{doma
 
 [astrology](https://glama.ai/mcp/connectors/com.roxyapi/astrology) · [vedic-astrology](https://glama.ai/mcp/connectors/com.roxyapi/vedic-astrology) · [forecast](https://glama.ai/mcp/connectors/com.roxyapi/forecast) · [human-design](https://glama.ai/mcp/connectors/com.roxyapi/human-design) · [chinese-astrology](https://glama.ai/mcp/connectors/com.roxyapi/chinese-astrology) · [feng-shui](https://glama.ai/mcp/connectors/com.roxyapi/feng-shui) · [mesoamerican-astrology](https://glama.ai/mcp/connectors/com.roxyapi/mesoamerican-astrology) · [vastu](https://glama.ai/mcp/connectors/com.roxyapi/vastu) · [numerology](https://glama.ai/mcp/connectors/com.roxyapi/numerology) · [kabbalah](https://glama.ai/mcp/connectors/com.roxyapi/kabbalah) · [tarot](https://glama.ai/mcp/connectors/com.roxyapi/tarot) · [biorhythm](https://glama.ai/mcp/connectors/com.roxyapi/biorhythm) · [ayurveda](https://glama.ai/mcp/connectors/com.roxyapi/ayurveda) · [iching](https://glama.ai/mcp/connectors/com.roxyapi/iching) · [crystals](https://glama.ai/mcp/connectors/com.roxyapi/crystals) · [dreams](https://glama.ai/mcp/connectors/com.roxyapi/dreams) · [angel-numbers](https://glama.ai/mcp/connectors/com.roxyapi/angel-numbers) · [location](https://glama.ai/mcp/connectors/com.roxyapi/location) · [docs](https://glama.ai/mcp/connectors/com.roxyapi/docs)
 
-This repository is the Claude Code plugin and marketplace, not one of those servers. It carries no MCP server of its own to install: it connects Claude Code to the hosted ones above and ships the Skill that teaches Claude how to use them.
+This repository is the Claude Code and Cursor plugin, not one of those servers. It carries no MCP server of its own to install: it connects the editor to the hosted ones above and ships the Skill that teaches the agent how to use them.
 
 ## What is RoxyAPI
 
