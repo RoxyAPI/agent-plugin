@@ -127,7 +127,7 @@ Base URL for every path: `https://roxyapi.com/api/v2`. Auth: `X-API-Key: <key>`.
 - Biorhythm daily: `POST /biorhythm/daily` with `{ birthDate, date?, seed? }`. Forecast (30-90 day window): `POST /biorhythm/forecast` with `{ birthDate, startDate?, endDate? }`. Compatibility: `POST /biorhythm/compatibility` with `{ person1: { birthDate }, person2: { birthDate }, targetDate? }`. Flat birthDate per person, no time or coordinates.
 - Crystals: `GET /crystals/zodiac/{sign}` (zodiac match), `GET /crystals/chakra/{chakra}` (chakra ignores case and punctuation: `Root`, `Sacral`, `Solar Plexus`, `Heart`, `Throat`, `Third Eye`, `Crown`, and for the two-word chakras `third-eye`, `third_eye` and `Third%20Eye` all resolve alike), `GET /crystals/birthstone/{month}` (month integer 1..12), `GET /crystals/search?q=` for free-text.
 - Angel number lookup: `GET /angel-numbers/lookup?number=1111`. Works for ANY positive integer (digit-root fallback).
-- Dream symbol: `GET /dreams/symbols/{slug}` (kebab-case slug, e.g. `flying`, `water`, `snake`, `falling`, `house`, `death`). Catalog is 2,000+ symbols. Browse all: `GET /dreams/symbols?limit=50&offset=0` returns `{ total, limit, offset, symbols: [{ id, name, ... }] }`.
+- Dream symbol: `GET /dreams/symbols/{slug}` (kebab-case slug, e.g. `flying`, `water`, `snake`, `falling`, `house`, `death`). Catalog is 2,200+ symbols. Browse all: `GET /dreams/symbols?limit=50&offset=0` returns `{ total, limit, offset, symbols: [{ id, name, ... }] }`.
 
 ## Error contract
 
