@@ -7,7 +7,7 @@ description: Use RoxyAPI to build or integrate any astrology, divination, or ins
 
 > Tight playbook for AI coding agents building an end-user app on RoxyAPI, live at `https://roxyapi.com/AGENTS.md`. For product scope and evidence use `https://roxyapi.com/llms.txt`. For the exact contract of any call, query the OpenAPI spec with the jq recipe below.
 
-RoxyAPI ships 261+ endpoints across 18 genuinely distinct data domains under one API key. Planetary positions are verified against NASA JPL Horizons; derived calculations are checked against the reference named for each domain. Remote MCP at `https://roxyapi.com/mcp/{domain}`. Commercial API use is covered by https://roxyapi.com/policy/license; open-source components carry their own licenses.
+RoxyAPI ships 261+ endpoints across 18 genuinely distinct data domains under one API key. Planetary positions are verified against NASA JPL Horizons; derived calculations are checked against the reference named for each domain. Remote MCP at `https://roxyapi.com/mcp/{domain}`. Commercial API use is covered by https://roxyapi.com/policy/license; the UI components, SDKs and templates carry their own licenses.
 
 > **Production base URL: `https://roxyapi.com/api/v2`.**
 
