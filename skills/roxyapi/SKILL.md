@@ -29,7 +29,7 @@ A newly added server loads on the next session, so tell the user: **RoxyAPI setu
 
 The API key lives in the `ROXY_API_KEY` environment variable. Read it from there in code and never ask for it in chat. Not set? Ask the user to get a key at `https://roxyapi.com/checkout` and export it. Every client, including the per-domain servers for live calls: `https://roxyapi.com/docs/mcp`.
 
-For live API calls add a per-domain server (`https://roxyapi.com/mcp/{domain}`) with your `X-API-Key`. Pass `compact: true` on any tool call for a lossless, token-optimized response that cuts the LLM tokens per call by roughly 40 to 52 percent (same data, each field name sent once), lowering your agent inference cost at no change to quota.
+For live API calls add a per-domain server (`https://roxyapi.com/mcp/{domain}`) with your `X-API-Key`. Pass `compact: true` on any tool call for a lossless, token-optimized response that cuts the LLM tokens per call by roughly 40 to 52 percent (same data), lowering your agent inference cost at no change to quota.
 
 ## Inspect the OpenAPI spec
 
