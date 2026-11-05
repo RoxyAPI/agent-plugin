@@ -39,7 +39,8 @@
 				"crystals",
 				"dreams",
 				"angel-numbers",
-				"location"
+				"location",
+				"reports"
 			],
 			"homepage": "https://roxyapi.com",
 			"repository": "https://github.com/RoxyAPI/agent-plugin",

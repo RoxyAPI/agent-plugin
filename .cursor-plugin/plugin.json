@@ -36,7 +36,8 @@
 		"crystals",
 		"dreams",
 		"angel-numbers",
-		"location"
+		"location",
+		"reports"
 	],
 	"displayName": "RoxyAPI",
 	"category": "integrations",
