@@ -7,7 +7,7 @@ description: Use RoxyAPI to build or integrate any astrology, divination, or ins
 
 > Tight playbook for AI coding agents building an end-user app on RoxyAPI, live at `https://roxyapi.com/AGENTS.md`. For product scope and evidence use `https://roxyapi.com/llms.txt`. For the exact contract of any call, query the OpenAPI spec with the jq recipe below.
 
-RoxyAPI ships 270+ endpoints across 18 genuinely distinct data domains under one API key. Planetary positions are verified against NASA JPL Horizons; derived calculations are checked against the reference named for each domain. Remote MCP at `https://roxyapi.com/mcp/{domain}`. Commercial API use is covered by https://roxyapi.com/policy/license; the UI components, SDKs and templates carry their own licenses.
+RoxyAPI ships 261+ endpoints across 18 genuinely distinct data domains under one API key. Planetary positions are verified against NASA JPL Horizons; derived calculations are checked against the reference named for each domain. Remote MCP at `https://roxyapi.com/mcp/{domain}`. Commercial API use is covered by https://roxyapi.com/policy/license; the UI components, SDKs and templates carry their own licenses.
 
 > **Production base URL: `https://roxyapi.com/api/v2`.**
 
@@ -101,6 +101,7 @@ Every agent guide linked below is raw markdown on GitHub: fetch it whole with `c
 | No-code site (Squarespace, Wix, Shopify, any CMS HTML block) | Copy-paste a prefilled widget from `https://roxyapi.com/widgets`: a one-tag snippet or hosted embed URL per embeddable component, powered by a publishable `pk_` key locked to the site origin. No backend, no build step. Platform walkthroughs: `https://roxyapi.com/docs/integrations/squarespace`, `/docs/integrations/wix`, `/docs/integrations/shopify`. |
 | Go project | `go get github.com/RoxyAPI/sdk-go`. Agent guide: `https://raw.githubusercontent.com/RoxyAPI/sdk-go/main/AGENTS.md`. |
 | Rust project | `cargo add roxyapi`. Async client for Rust 1.88+. Agent guide: `https://raw.githubusercontent.com/RoxyAPI/sdk-rust/main/AGENTS.md`. |
+| Dart or Flutter project | `dart pub add roxyapi` or `flutter pub add roxyapi`. Typed client for Dart 3.9+, every platform. Agent guide: `https://raw.githubusercontent.com/RoxyAPI/sdk-dart/main/AGENTS.md` (also bundled in the package). |
 | Other languages | Generate a typed client from the OpenAPI with a generator for your language. |
 | AI agent (Claude, GPT, Gemini, Cursor, VS Code, Claude Code) | Use MCP. Per-domain Streamable HTTP servers at `https://roxyapi.com/mcp/{domain}`. No OAuth, no Docker. See `https://roxyapi.com/docs/mcp`. |
 | Claude Desktop (one config) | Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\\Claude\\claude_desktop_config.json` (Windows). Add `"mcpServers": { "roxy-astrology": { "type": "http", "url": "https://roxyapi.com/mcp/astrology", "headers": { "X-API-Key": "<key>" } } }`. Restart Claude. Repeat per domain you want exposed. |
